@@ -77,87 +77,42 @@ if has ("gui")
     set go=
 endif
 
-"EOF"
-"
-"set nocompatible
-"source $VIMRUNTIME/vimrc_example.vim
-"source $VIMRUNTIME/mswin.vim
-"behave mswin
+function! JapaneseEncoding ()
+    if has ('WIN32')
+        set encoding=cp932
+    elseif has ('unix')
+        "set encoding=sjis
+        set encoding=utf-8
+    else
+        set encoding=utf-8
+        "set encoding=latin1
+    endif
+    set fileencodings=iso-2022-jp,utf-8,euc-jp,cp932
+    set termencoding=utf-8
+    let $LANG='ja'
+endfunction
 
-"set diffexpr=MyDiff()
-"function MyDiff()
-"  let opt = '-a --binary '
-"  if &diffopt =~ 'icase' | let opt = opt . '-i ' | endif
-"  if &diffopt =~ 'iwhite' | let opt = opt . '-b ' | endif
-"  let arg1 = v:fname_in
-"  if arg1 =~ ' ' | let arg1 = '"' . arg1 . '"' | endif
-"  let arg2 = v:fname_new
-"  if arg2 =~ ' ' | let arg2 = '"' . arg2 . '"' | endif
-"  let arg3 = v:fname_out
-"  if arg3 =~ ' ' | let arg3 = '"' . arg3 . '"' | endif
-"  let eq = ''
-"  if $VIMRUNTIME =~ ' '
-"    if &sh =~ '\<cmd'
-"      let cmd = '""' . $VIMRUNTIME . '\diff"'
-"      let eq = '"'
-"    else
-"      let cmd = substitute($VIMRUNTIME, ' ', '" ', '') . '\diff"'
-"    endif
-"  else
-"    let cmd = $VIMRUNTIME . '\diff'
-"  endif
-"  silent execute '!' . cmd . ' ' . opt . arg1 . ' ' . arg2 . ' > ' . arg3 . eq
-"endfunction
-"
-"set encoding=utf-8
+function! ChineseEncoding ()
+    if has ('WIN32')
+        set encoding=cp936
+    elseif has ('unix')
+        set encoding=euc-cn
+    else
+        set encoding=latin1
+    endif
+    set fileencodings=utf-8,gb2312,gbk,gb18030
+    set termencoding=utf-8
+    let $LANG='zh-CN'
+endfunction
 
-function! ToggleLang (language)
-   if a:language == "jp"
-       if has ('WIN32')
-           set encoding=cp932
-       elseif has ('unix')
-           "set encoding=sjis
-           set encoding=utf-8
-       else
-           set encoding=utf-8
-           "set encoding=latin1
-       endif
-       set fileencodings=iso-2022-jp,utf-8,euc-jp,cp932
-       set termencoding=utf-8
-       let $LANG='ja'
-   endif
-   if a:language == "zh-CN"
-       if has ('WIN32')
-           set encoding=cp936
-       elseif has ('unix')
-           set encoding=euc-cn
-       else
-           set encoding=latin1
-       endif
-       set fileencodings=utf-8,gb2312,gbk,gb18030
-       set termencoding=utf-8
-       let $LANG='zh-CN'
-   endif 
-   if expand("%") != ""
-       :e
-  endif
-endfunction 
-
-"map <F7> :call ToggleLang('jp') <CR>
-"map <F8> :call ToggleLang('zh-CN') <CR>
-
-function! GDBChanel()
+function! StartGDB()
     :syntax enable			        " enable syntax highlighting
     :set previewheight=12		    " set gdb window initial height
     :run macros/gdb_mappings.vim	" source key mappings listed in this
     :set asm=0				        " don't show any assembly stuff
     :set gdbprg=gdb_invocation		" set GDB invocation string (default 'gdb')
-    :set gdbprg=gdb\ --args\ /mnt/fat32/development/build/unix/chanel
+    :set gdbprg=gdb\ --args\ a.exe
     :call gdb (" ")
 endfunction
 
-map <F8> :call GDBChanel () <CR>
-
-map <leader>h :W3mHistory <CR>
-map <leader>w :W3m http://www.google.com/ncr<CR>
-
+map <F8> :call StartGDB () <CR>
