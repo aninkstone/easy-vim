@@ -9,7 +9,7 @@
 "
 "
 function! CGrepR ()
-    :execute "vimgrep /" . expand("<cword>") . "/j *.cc"
+    :execute "vimgrep /" . expand("<cword>") . "/j **/*.cc **/*.h **/*.cpp **/*.c **/*.xml"
     :copen
 endfunction
 
