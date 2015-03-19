@@ -3,7 +3,7 @@
 " Version:  4.5.0
 " Date:     2011/06/10 12:55:57
 " Author:   Chen Zuopeng (EN: Daniel Chen)
-" Email:    chenzuopeng@gmail.com
+" Email:    thatways.c@gmail.com
 "
 " License:  Public domain, no restrictions whatsoever
 "
@@ -479,5 +479,3 @@ endif
 :map <Leader>sc :call ConfigSymbs()  <CR>
 "}}}
 " vim600:fdm=marker:fdc=4:cms=\ "\ %s:
-
-
