@@ -85,7 +85,6 @@ endfunction
 
 function s:GetTable()
     "读取码表
-
     let tableFile = s:path . 'vimim_wubi.txt'
     try
         let table = readfile(tableFile)

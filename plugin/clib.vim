@@ -15,4 +15,36 @@ endfunction
 
 map <leader>g :call CGrepR()<CR>
 
+function! SetEnvironmentUTF8 ()
+    :set encoding=utf-8
+    :set langmenu=zh_CN.UTF-8
+    :language message zh_CN.UTF-8
+endfunction
 
+function! JapaneseEncoding ()
+    if has ('WIN32')
+        set encoding=cp932
+    elseif has ('unix')
+        "set encoding=sjis
+        set encoding=utf-8
+    else
+        set encoding=utf-8
+        "set encoding=latin1
+    endif
+    set fileencodings=iso-2022-jp,utf-8,euc-jp,cp932
+    set termencoding=utf-8
+    let $LANG='ja'
+endfunction
+
+function! ChineseEncoding ()
+    if has ('WIN32')
+        set encoding=cp936
+    elseif has ('unix')
+        set encoding=euc-cn
+    else
+        set encoding=latin1
+    endif
+    set fileencodings=utf-8,gb2312,gbk,gb18030
+    set termencoding=utf-8
+    let $LANG='zh-CN'
+endfunction
