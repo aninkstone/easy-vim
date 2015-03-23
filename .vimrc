@@ -15,6 +15,7 @@ set shiftwidth=4
 set nobackup
 set nowritebackup
 set noswapfile
+set cino=l1  "switch case indent
 
 set history=100
 set showcmd
@@ -47,8 +48,8 @@ colorscheme desert
 "colorscheme zenburn
 
 if has("gui")
-    "set guifont=新宋体:h12:cGB2312
-    set guifont=Courier\ 10\ Pitch\ 11
+    set guifont=新宋体:h13:cGB2312
+    "set guifont=Courier:12
 endif
 
 
@@ -81,11 +82,9 @@ function! JapaneseEncoding ()
     if has ('WIN32')
         set encoding=cp932
     elseif has ('unix')
-        "set encoding=sjis
         set encoding=utf-8
     else
         set encoding=utf-8
-        "set encoding=latin1
     endif
     set fileencodings=iso-2022-jp,utf-8,euc-jp,cp932
     set termencoding=utf-8
@@ -116,3 +115,6 @@ function! StartGDB()
 endfunction
 
 map <F8> :call StartGDB () <CR>
+
+map lcd :cd %:p:h<CR>
+
