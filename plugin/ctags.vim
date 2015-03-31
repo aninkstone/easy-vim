@@ -425,7 +425,6 @@ endfunction
 "}}}
 "Config Symbs {{{
 function! ConfigSymbs ()
-	call CloseSnippedWndAndListWndOnce ()
     call OpenConfigWnd (LoadConfigData(s:platform_inde[s:platform]['env_f']))
 endfunction
 
