@@ -9,7 +9,7 @@
 "
 "
 function! CGrepR ()
-    :execute "vimgrep /" . expand("<cword>") . "/j **/*.cc **/*.h **/*.cpp **/*.c **/*.xml"
+    :silent "vimgrep /" . expand("<cword>") . "/j **/*.cc **/*.h **/*.cpp **/*.c **/*.xml"
     :copen
 endfunction
 
@@ -21,7 +21,7 @@ function! SetEnvironmentUTF8 ()
     :language message zh_CN.UTF-8
 endfunction
 
-function! JapaneseEncoding ()
+function! SetEnvironmentJapanese ()
     if has ('WIN32')
         set encoding=cp932
     elseif has ('unix')
@@ -36,7 +36,7 @@ function! JapaneseEncoding ()
     let $LANG='ja'
 endfunction
 
-function! ChineseEncoding ()
+function! SetEnvironmentChinese ()
     if has ('WIN32')
         set encoding=cp936
     elseif has ('unix')
@@ -48,3 +48,4 @@ function! ChineseEncoding ()
     set termencoding=utf-8
     let $LANG='zh-CN'
 endfunction
+
