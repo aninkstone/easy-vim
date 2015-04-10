@@ -9,7 +9,16 @@
 "
 "
 function! CGrepR ()
-    :silent "vimgrep /" . expand("<cword>") . "/j **/*.cc **/*.h **/*.cpp **/*.c **/*.xml"
+    :let match = "/j **/*.cc **/*.h **/*.cpp **/*.c **/*.xml **/*.html **/*.js **/*.java **/*.mk **/*.json Makefile makefile"
+    :exec "vimgrep /" . expand("<cword>") . match
+    :echo "vimgrep /" . expand("<cword>") . match
+    :copen
+endfunction
+
+function! CGrep ()
+    :let match = "/j *.cc *.h *.cpp *.c *.xml *.html *.js *.python *.java *.mk *.json Makefile makefile"
+    :exec "vimgrep /" . expand("<cword>") . match
+    :echo "vimgrep /" . expand("<cword>") . match
     :copen
 endfunction
 
