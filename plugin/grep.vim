@@ -347,7 +347,7 @@ endif
 " Use the 'xargs' utility in combination with the 'find' utility. Set this
 " to zero to not use the xargs utility.
 if !exists("Grep_Find_Use_Xargs")
-    let Grep_Find_Use_Xargs = 1
+    let Grep_Find_Use_Xargs = 0
 endif
 
 " The command-line arguments to supply to the xargs utility
@@ -404,6 +404,8 @@ endif
 " RunGrepCmd()
 " Run the specified grep command using the supplied pattern
 function! s:RunGrepCmd(cmd, pattern, action)
+    echo "########"
+    echo a:cmd
     let cmd_output = system(a:cmd)
 
     if cmd_output == ""
@@ -542,8 +544,12 @@ function! s:RunGrepRecursive(cmd_name, grep_cmd, action, ...)
               \ g:Grep_Shell_Quote_Char . one_pattern . g:Grep_Shell_Quote_Char
         let txt = strpart(txt, stridx(txt, ' ') + 1)
     endwhile
-    let find_file_pattern = g:Grep_Shell_Escape_Char . '(' .
+    if has ('win32')
+        let find_file_pattern = ""
+    else
+        let find_file_pattern = g:Grep_Shell_Escape_Char . '(' .
                     \ find_file_pattern . ' ' . g:Grep_Shell_Escape_Char . ')'
+    endif
 
     let txt = g:Grep_Skip_Dirs
     let find_prune = ''
@@ -596,6 +602,7 @@ function! s:RunGrepRecursive(cmd_name, grep_cmd, action, ...)
                          \ g:Grep_Shell_Escape_Char . ';'
     endif
 
+    echo cmd
     call s:RunGrepCmd(cmd, pattern, a:action)
 endfunction
 
