@@ -8,21 +8,22 @@
 " License:  Public domain, no restrictions whatsoever
 "
 "
-function! CGrepR ()
-    :let match = "/j **/*.cc **/*.h **/*.cpp **/*.c **/*.xml **/*.html **/*.js **/*.java **/*.mk **/*.json Makefile makefile"
-    :exec "vimgrep /" . expand("<cword>") . match
-    :echo "vimgrep /" . expand("<cword>") . match
-    :copen
-endfunction
 
-function! CGrep ()
-    :let match = "/j *.cc *.h *.cpp *.c *.xml *.html *.js *.python *.java *.mk *.json Makefile makefile"
-    :exec "vimgrep /" . expand("<cword>") . match
-    :echo "vimgrep /" . expand("<cword>") . match
-    :copen
-endfunction
+"function! CGrepR ()
+"    :let match = "/j **/*.cc **/*.h **/*.cpp **/*.c **/*.xml **/*.html **/*.js **/*.java **/*.mk **/*.json Makefile makefile"
+"    :exec "vimgrep /" . expand("<cword>") . match
+"    :echo "vimgrep /" . expand("<cword>") . match
+"    :copen
+"endfunction
+"
+"function! CGrep ()
+"    :let match = "/j *.cc *.h *.cpp *.c *.xml *.html *.js *.python *.java *.mk *.json Makefile makefile"
+"    :exec "vimgrep /" . expand("<cword>") . match
+"    :echo "vimgrep /" . expand("<cword>") . match
+"    :copen
+"endfunction
 
-map <leader>g :call CGrepR()<CR>
+"map <leader>g :call CGrepR()<CR>
 
 function! SetEnvironmentUTF8 ()
     :set encoding=utf-8
