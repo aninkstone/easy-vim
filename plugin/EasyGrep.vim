@@ -726,7 +726,7 @@ function! s:AddAdditionalLocationsToFileTargetList(fileTargetList)
     for item in fileTargetList
         if s:IsRecursiveSearch() && s:IsCommandVimgrep()
             " Insert a recursive specifier into the command
-            let item = substitute(item, '/\([^/]\+\)$', '/**/\1', "")
+            let item = substitute(item, '\([^/]\+\)$', '**/\1', "")
             let item = substitute(item, '/\*\*/\*$', '/**', "")
             let item = substitute(item, '^\*$', '**', "")
         endif
@@ -1054,19 +1054,21 @@ function! <sid>EchoGrepCommand()
     let recursiveTag = s:IsRecursiveSearch() ? " (Recursive)" : ""
     call s:Echo("Search Mode:           ".s:GetModeName(g:EasyGrepMode).recursiveTag)
 
-    if g:EasyGrepSearchCurrentBufferDir && s:IsBufferDirSearchAllowed()
-        let dirs = s:GetDirectorySearchList()
-        let dirAnnotation = "Search Directory:      "
-        for d in dirs
+    if !s:CommandHas("opt_bool_nofiletargets")
+        if g:EasyGrepSearchCurrentBufferDir && s:IsBufferDirSearchAllowed()
+            let dirs = s:GetDirectorySearchList()
+            let dirAnnotation = "Search Directory:      "
+            for d in dirs
+                let d = (d == ".") ? d." --> ".s:GetCwdEscaped()."" : d
+                call s:Echo(dirAnnotation.d)
+                let dirAnnotation = "Additional Directory:  "
+            endfor
+        else
+            let dirAnnotation = "Search Directory:      "
+            let d = s:GetGrepRoot()
             let d = (d == ".") ? d." --> ".s:GetCwdEscaped()."" : d
             call s:Echo(dirAnnotation.d)
-            let dirAnnotation = "Additional Directory:  "
-        endfor
-    else
-        let dirAnnotation = "Search Directory:      "
-        let d = s:GetGrepRoot()
-        let d = (d == ".") ? d." --> ".s:GetCwdEscaped()."" : d
-        call s:Echo(dirAnnotation.d)
+        endif
     endif
 
     let placeholder = "<pattern>"
@@ -1393,7 +1395,7 @@ function! <sid>ToggleWindow()
     let g:EasyGrepWindow = !g:EasyGrepWindow
     call s:RefreshAllOptions()
 
-    call s:Echo("Set window to (".s:GetErrorListName().")")
+    call s:Echo("Set window to (".EasyGrep#GetErrorListName().")")
 endfunction
 "}}}
 " ToggleOpenWindow {{{
@@ -1657,7 +1659,7 @@ function! s:CreateOptionsString()
     if g:EasyGrepAllOptionsInExplorer
         call add(s:Options, "\"x: set files to exclude")
         call add(s:Options, "\"c: change grep command (".s:GetGrepCommandNameWithOptions().")")
-        call add(s:Options, "\"w: window to use (".s:GetErrorListName().")")
+        call add(s:Options, "\"w: window to use (".EasyGrep#GetErrorListName().")")
         call add(s:Options, "\"m: replace window mode (".s:GetReplaceWindowModeString(g:EasyGrepReplaceWindowMode).")")
         call add(s:Options, "\"o: open window on match (".s:OnOrOff(g:EasyGrepOpenWindowOnMatch).")")
         call add(s:Options, "\"g: separate multiple matches (".s:OnOrOff(g:EasyGrepEveryMatch).")")
@@ -2383,8 +2385,8 @@ function! s:ReplaceUndo()
         endif
     endif
 
-    call s:SetErrorList(s:LastErrorList)
-    call s:GotoStartErrorList()
+    call EasyGrep#SetErrorList(s:LastErrorList)
+    call EasyGrep#GotoStartErrorList()
 
     let bufList = s:GetVisibleBuffers()
 
@@ -2571,6 +2573,7 @@ function! s:ConfigureGrepCommandParameters()
                 \ 'opt_bool_directoryneedsbackslash': '0',
                 \ 'opt_bool_isinherentlyrecursive': '0',
                 \ 'opt_bool_isselffiltering': '0',
+                \ 'opt_bool_nofiletargets': '0',
                 \ })
 
     call s:RegisterGrepProgram("grep", {
@@ -2593,6 +2596,7 @@ function! s:ConfigureGrepCommandParameters()
                 \ 'opt_bool_directoryneedsbackslash': '0',
                 \ 'opt_bool_isinherentlyrecursive': '0',
                 \ 'opt_bool_isselffiltering': '0',
+                \ 'opt_bool_nofiletargets': '0',
                 \ 'opt_str_recursiveinclusionexpression': '"--include=\"" .v:val."\""',
                 \ })
 
@@ -2616,6 +2620,7 @@ function! s:ConfigureGrepCommandParameters()
                 \ 'opt_bool_directoryneedsbackslash': '0',
                 \ 'opt_bool_isinherentlyrecursive': '0',
                 \ 'opt_bool_isselffiltering': '0',
+                \ 'opt_bool_nofiletargets': '0',
                 \ })
 
     call s:RegisterGrepProgram("ack", {
@@ -2638,6 +2643,7 @@ function! s:ConfigureGrepCommandParameters()
                 \ 'opt_bool_directoryneedsbackslash': '0',
                 \ 'opt_bool_isinherentlyrecursive': '1',
                 \ 'opt_bool_isselffiltering': '1',
+                \ 'opt_bool_nofiletargets': '0',
                 \ })
 
     call s:RegisterGrepProgram("ack-grep", s:commandParamsDict["ack"])
@@ -2662,6 +2668,7 @@ function! s:ConfigureGrepCommandParameters()
                 \ 'opt_bool_directoryneedsbackslash': '0',
                 \ 'opt_bool_isinherentlyrecursive': '1',
                 \ 'opt_bool_isselffiltering': '1',
+                \ 'opt_bool_nofiletargets': '0',
                 \ })
 
     call s:RegisterGrepProgram("pt", {
@@ -2684,6 +2691,30 @@ function! s:ConfigureGrepCommandParameters()
                 \ 'opt_bool_directoryneedsbackslash': '0',
                 \ 'opt_bool_isinherentlyrecursive': '1',
                 \ 'opt_bool_isselffiltering': '1',
+                \ 'opt_bool_nofiletargets': '0',
+                \ })
+
+    call s:RegisterGrepProgram("csearch", {
+                \ 'req_str_programargs': '-n',
+                \ 'req_bool_supportsexclusions': '0',
+                \ 'req_str_recurse': '',
+                \ 'req_str_caseignore': '-i',
+                \ 'req_str_casematch': '',
+                \ 'opt_str_patternprefix': '"',
+                \ 'opt_str_patternpostfix': '"',
+                \ 'opt_str_wholewordprefix': '\b',
+                \ 'opt_str_wholewordpostfix': '\b',
+                \ 'opt_str_wholewordoption': '',
+                \ 'req_str_escapespecialcharacters': "\^$#.*+?()[]{}",
+                \ 'opt_str_escapespecialcharacterstwice': "",
+                \ 'opt_str_mapexclusionsexpression': '',
+                \ 'opt_bool_filtertargetswithnofiles': '0',
+                \ 'opt_bool_bufferdirsearchallowed': '0',
+                \ 'opt_str_suppresserrormessages': '',
+                \ 'opt_bool_directoryneedsbackslash': '0',
+                \ 'opt_bool_isinherentlyrecursive': '1',
+                \ 'opt_bool_isselffiltering': '1',
+                \ 'opt_bool_nofiletargets': '1',
                 \ })
 
     "call s:RegisterGrepProgram("findstr", {
@@ -2789,7 +2820,7 @@ function! s:GetGrepCommandLine(pattern, add, wholeword, count, escapeArgs, filte
         let opts .= commandParams["opt_str_suppresserrormessages"]." "
     endif
 
-    let fileTargetList = s:GetFileTargetList(1)
+    let fileTargetList = s:CommandHas("opt_bool_nofiletargets") ? [] : s:GetFileTargetList(1)
     let filesToExclude = g:EasyGrepFilesToExclude
 
     if a:filterTargetsWithNoFiles && s:CommandHas("opt_bool_filtertargetswithnofiles")
@@ -2942,7 +2973,7 @@ endfunction
 " }}}
 " HasGrepResults{{{
 function! s:HasGrepResults()
-    return !empty(s:GetErrorList())
+    return !empty(EasyGrep#GetErrorList())
 endfunction
 "}}}
 " HasFilesThatMatch{{{
@@ -3025,7 +3056,7 @@ function! s:DoReplace(target, replacement, wholeword, escapeArgs)
     let target = a:escapeArgs ? s:EscapeSpecialCharacters(a:target) : a:target
     let replacement = a:replacement
 
-    let s:LastErrorList = deepcopy(s:GetErrorList())
+    let s:LastErrorList = deepcopy(EasyGrep#GetErrorList())
     let numMatches = len(s:LastErrorList)
 
     let s:actionList = []
@@ -3045,7 +3076,7 @@ function! s:DoReplace(target, replacement, wholeword, escapeArgs)
 
     let bufList = s:GetVisibleBuffers()
 
-    call s:GotoStartErrorList()
+    call EasyGrep#GotoStartErrorList()
 
     call s:SaveVariable("ignorecase")
     let &ignorecase = g:EasyGrepIgnoreCase
@@ -3246,42 +3277,6 @@ endfunction
 "}}}
 " }}}
 " ResultList Functions {{{
-" GetErrorList {{{
-function! s:GetErrorList()
-    if g:EasyGrepWindow == 0
-        return getqflist()
-    else
-        return getloclist(0)
-    endif
-endfunction
-"}}}
-" GetErrorListName {{{
-function! s:GetErrorListName()
-    if g:EasyGrepWindow == 0
-        return 'quickfix'
-    else
-        return 'location list'
-    endif
-endfunction
-"}}}
-" SetErrorList {{{
-function! s:SetErrorList(lst)
-    if g:EasyGrepWindow == 0
-        call setqflist(a:lst)
-    else
-        call setloclist(0,a:lst)
-    endif
-endfunction
-"}}}
-" GotoStartErrorList {{{
-function! s:GotoStartErrorList()
-    if g:EasyGrepWindow == 0
-        cfirst
-    else
-        lfirst
-    endif
-endfunction
-"}}}
 " ResultListFilter {{{
 function! s:ResultListFilter(...)
     let mode = 'g'
@@ -3314,7 +3309,7 @@ function! s:ResultListFilter(...)
         return
     endif
 
-    let lst = s:GetErrorList()
+    let lst = EasyGrep#GetErrorList()
     if empty(lst)
         call s:Error("Error list is empty")
         return
@@ -3337,12 +3332,12 @@ function! s:ResultListFilter(...)
         endfor
     endfor
 
-    call s:SetErrorList(newlst)
+    call EasyGrep#SetErrorList(newlst)
 endfunction
 "}}}
 " ResultListOpen {{{
 function! s:ResultListOpen(...)
-    let lst = s:GetErrorList()
+    let lst = EasyGrep#GetErrorList()
 
     if empty(lst)
         call s:Error("Error list is empty")
@@ -3360,7 +3355,7 @@ endfunction
 "}}}
 " ResultListDo {{{
 function! s:ResultListDo(command)
-    let lst = s:GetErrorList()
+    let lst = EasyGrep#GetErrorList()
     if empty(lst)
         call s:Error("Error list is empty")
         return
@@ -3383,7 +3378,7 @@ function! s:ResultListDo(command)
 
     let bufList = s:GetVisibleBuffers()
 
-    call s:GotoStartErrorList()
+    call EasyGrep#GotoStartErrorList()
 
     call s:SaveVariable("cursorline")
     set cursorline
@@ -3527,7 +3522,7 @@ function! s:ResultListSave(f)
         call s:Echo("Proceeding to overwrite '".a:f."'")
     endif
 
-    let lst = s:GetErrorList()
+    let lst = EasyGrep#GetErrorList()
 
     if empty(lst)
         call s:Error("No result list to save")
@@ -3552,7 +3547,7 @@ endfunction
 "}}}
 " ResultListTag {{{
 function! s:ResultListTag(tag)
-    let lst = s:GetErrorList()
+    let lst = EasyGrep#GetErrorList()
 
     let entry = {
                 \ 'bufnr' : bufnr('%'),
@@ -3568,7 +3563,7 @@ function! s:ResultListTag(tag)
 
     call add(lst, entry)
 
-    call s:SetErrorList(lst)
+    call EasyGrep#SetErrorList(lst)
 endfunction
 "}}}
 " }}}
