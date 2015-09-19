@@ -29,32 +29,31 @@ if &t_Co > 2 || has("gui_running")
     :set hlsearch
 endif
 
+filetype plugin indent on
+
 set incsearch
 set hlsearch
-filetype plugin indent on
 set fileformat=unix
 set expandtab
 set tabstop=4
 set softtabstop=4
+set go=m
+
+if has ("gui_running")
+    colorscheme desert
+endif
 
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-"Set color scheme
-":if has("gui")
-"    :colorscheme lucius
-":else
-"    :colorscheme desert
-":endif
-colorscheme desert
-"colorscheme zenburn
+"set environment
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+if has ("win32")
+    let $PATH="C:\\MinGW\\msys\\1.0\\bin;C:\\MinGW\\bin;" . $PATH
+endif
 
+
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 if has("gui_running")
-  if has("gui_gtk2")
-    set guifont=Inconsolata\ 12
-  elseif has("gui_macvim")
-    set guifont=Menlo\ Regular:h14
-  elseif has("gui_win32")
-    set guifont=Consolas:h11:cANSI
-  endif
+    set guifont=Consolas:h12:cANSI
 endif
 
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
@@ -63,9 +62,49 @@ endif
 "Insert current time format yy-mm-dd hh:mm:ss
 map <F2>  a<C-R>=strftime("%c")<CR><Esc>
 "recently opened files
-"Need MRU plugin [http://www.vim.org/scripts/script.php?script_id=521]
-map <F4>  :MRU<CR>
-"Need taglist plugin [http://www.vim.org/scripts/script.php?script_id=273]
-map <F6>  :TlistToggle<CR>
-map <Tab> :NERDTree<CR>
 map <leader>lcd :cd %:p:h<CR>
+
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+"Neo
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" Note: Skip initialization for vim-tiny or vim-small.
+if 0 | endif
+
+if has('vim_starting')
+  if &compatible
+    set nocompatible               " Be iMproved
+  endif
+
+  " Required:
+  set runtimepath+=~/.vim/bundle/neobundle.vim/
+endif
+
+" Required:
+call neobundle#begin(expand('~/.vim/bundle/'))
+
+" Let NeoBundle manage NeoBundle
+" Required:
+NeoBundleFetch 'Shougo/neobundle.vim'
+NeoBundle 'mileszs/ack.vim'
+NeoBundle 'ervandew/supertab'
+NeoBundle 'tpope/vim-fugitive'
+NeoBundle 'vim-scripts/Mark--Karkat'
+NeoBundle 'kien/ctrlp.vim'
+
+" My Bundles here:
+" Refer to |:NeoBundle-examples|.
+" Note: You don't set neobundle setting in .gvimrc!
+
+call neobundle#end()
+
+" Required:
+filetype plugin indent on
+
+" If there are uninstalled bundles found on startup,
+" this will conveniently prompt you to install them.
+NeoBundleCheck
+
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+"Plugin configuration
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+let g:ackprg = 'ag --vimgrep'
