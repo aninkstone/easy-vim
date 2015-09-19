@@ -90,6 +90,7 @@ NeoBundle 'ervandew/supertab'
 NeoBundle 'tpope/vim-fugitive'
 NeoBundle 'vim-scripts/Mark--Karkat'
 NeoBundle 'kien/ctrlp.vim'
+NeoBundle 'bling/vim-airline'
 
 " My Bundles here:
 " Refer to |:NeoBundle-examples|.
