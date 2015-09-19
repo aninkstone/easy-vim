@@ -90,7 +90,6 @@ NeoBundle 'ervandew/supertab'
 NeoBundle 'tpope/vim-fugitive'
 NeoBundle 'vim-scripts/Mark--Karkat'
 NeoBundle 'kien/ctrlp.vim'
-NeoBundle 'tpope/vim-vinegar'
 
 " My Bundles here:
 " Refer to |:NeoBundle-examples|.
@@ -113,13 +112,13 @@ let g:ackprg = 'ag --vimgrep'
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 "Make netrw really behave like Nerdtree
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-let g:netrw_liststyle = 3
-let g:netrw_browse_split = 4
-let g:netrw_altv = 1
-let g:netrw_winsize = 25
-let g:netrw_banner = 0
-let g:netrw_list_hide = &wildignore
-augroup NetRW
-  autocmd!
-  autocmd VimEnter * :Nexplore
-augroup END
+"let g:netrw_liststyle = 3
+"let g:netrw_browse_split = 4
+"let g:netrw_altv = 1
+"let g:netrw_winsize = 25
+"let g:netrw_banner = 0
+"let g:netrw_list_hide = &wildignore
+"augroup NetRW
+"  autocmd!
+"  autocmd VimEnter * :Vexplore
+"augroup END
