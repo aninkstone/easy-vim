@@ -426,6 +426,7 @@ function! s:RunGlobal(line)
         endif
     endif
     call s:ExecLoad(l:option, '', l:pattern)
+    :cclose
 endfunction
 
 "
