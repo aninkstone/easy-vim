@@ -90,6 +90,9 @@ NeoBundle 'ervandew/supertab'
 NeoBundle 'tpope/vim-fugitive'
 NeoBundle 'vim-scripts/Mark--Karkat'
 NeoBundle 'kien/ctrlp.vim'
+NeoBundle 'vim-scripts/DrawIt'
+NeoBundle 'Shougo/unite.vim'
+NeoBundle 'hewes/unite-gtags'
 
 " My Bundles here:
 " Refer to |:NeoBundle-examples|.
@@ -126,9 +129,23 @@ let g:ctrlp_working_path_mode = 'r'
 nmap <leader>p :CtrlP<cr>
 
 " Easy bindings for its various modes
-nmap <leader>be :CtrlPBuffer<cr>
+"nmap <leader>be :CtrlPBuffer<cr>
 nmap <leader>bm :CtrlPMixed<cr>
 nmap <leader>bs :CtrlPMRU<cr>
+nmap <Tab> :NERDTree<cr>
+
+nmap <leader>t  :!start explorer.exe .<cr>
+nmap <leader>gl :Git! log --all --oneline --graph<cr>
+
+nnoremap <leader>gg :execute 'Unite gtags/def:'.expand('<cword>')<cr>
+nnoremap <leader>gc :execute 'Unite gtags/context'<cr>
+nnoremap <leader>gr :execute 'Unite gtags/ref'<cr>
+"nnoremap <leader>ge :execute 'Unite gtags/grep'<cr>
+nnoremap <leader>be :execute 'Unite buffer'<cr>
+
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+"Airline configure
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 "Make netrw really behave like Nerdtree
@@ -143,3 +160,4 @@ nmap <leader>bs :CtrlPMRU<cr>
 "  autocmd!
 "  autocmd VimEnter * :Vexplore
 "augroup END
+
