@@ -129,23 +129,26 @@ let g:ctrlp_working_path_mode = 'r'
 nmap <leader>p :CtrlP<cr>
 
 " Easy bindings for its various modes
-"nmap <leader>be :CtrlPBuffer<cr>
+nmap <leader>be :CtrlPBuffer<cr>
 nmap <leader>bm :CtrlPMixed<cr>
 nmap <leader>bs :CtrlPMRU<cr>
 nmap <Tab> :NERDTree<cr>
 
 nmap <leader>t  :!start explorer.exe .<cr>
-nmap <leader>gl :Git! log --all --oneline --graph<cr>
-
 nnoremap <leader>gg :execute 'Unite gtags/def:'.expand('<cword>')<cr>
 nnoremap <leader>gc :execute 'Unite gtags/context'<cr>
 nnoremap <leader>gr :execute 'Unite gtags/ref'<cr>
 "nnoremap <leader>ge :execute 'Unite gtags/grep'<cr>
-nnoremap <leader>be :execute 'Unite buffer'<cr>
+"nnoremap <leader>be :execute 'Unite buffer'<cr>
 
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-"Airline configure
+"git configure
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+nmap <leader>gl :Git! log --all --oneline --graph<cr>
+nmap <leader>gb :Git! branch -a<cr>
+nmap <leader>gs :Gstatus<cr>
+set statusline=%<%f\ %h%m%r%{fugitive#statusline()}%=%-14.(%l,%c%V%)\ %P
+"nmap <leader>gk :!start gitk.cmd<cr>
 
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 "Make netrw really behave like Nerdtree
