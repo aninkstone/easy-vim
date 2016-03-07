@@ -1081,4 +1081,3 @@ endfunction
 "}}}
 "
 " vim600:fdm=marker:fdc=4:cms=\ "\ %s:
-

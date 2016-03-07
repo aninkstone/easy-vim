@@ -76,11 +76,19 @@ if has('vim_starting')
   endif
 
   " Required:
-  set runtimepath+=$VIM\vimfiles\bundle\neobundle.vim
+  if has ("win32")
+      set runtimepath+=$VIM\vimfiles\bundle\neobundle.vim
+  else
+      set runtimepath+=~/.vim/bundle/neobundle.vim/
+  endif
 endif
 
 " Required:
-call neobundle#begin(expand('$VIM\vimfiles\bundle\'))
+if has ("win32")
+    call neobundle#begin(expand('$VIM\vimfiles\bundle\'))
+else 
+    call neobundle#begin(expand('~/.vim/bundle/'))
+endif
 
 " Let NeoBundle manage NeoBundle
 " Required:
@@ -163,4 +171,3 @@ set statusline=%<%f\ %h%m%r%{fugitive#statusline()}%=%-14.(%l,%c%V%)\ %P
 "  autocmd!
 "  autocmd VimEnter * :Vexplore
 "augroup END
-
