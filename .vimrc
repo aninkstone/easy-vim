@@ -124,7 +124,6 @@ NeoBundle 'kien/ctrlp.vim'
 NeoBundle 'vim-scripts/DrawIt'
 NeoBundle 'vim-scripts/EasyGrep'
 NeoBundle 'chrisbra/csv.vim'
-NeoBundle 'mhinz/vim-signify'
 NeoBundle 'aceofall/gtags.vim'
 NeoBundle 'vim-scripts/mru.vim'
 NeoBundle 'gregsexton/gitv'
@@ -193,6 +192,7 @@ if has("gui_running")
     "let g:airline_theme="raven"
 else
     let g:airline_theme="zenburn"
+    let g:airline_theme="solarized"
 endif
 let g:airline_powerline_fonts = 1   
 "let g:airline#extensions#tabline#enabled = 1
