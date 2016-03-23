@@ -123,8 +123,6 @@ NeoBundle 'vim-scripts/Mark--Karkat'
 NeoBundle 'kien/ctrlp.vim'
 NeoBundle 'vim-scripts/DrawIt'
 NeoBundle 'vim-scripts/EasyGrep'
-NeoBundle 'vim-airline/vim-airline'
-NeoBundle 'vim-airline/vim-airline-themes'
 NeoBundle 'chrisbra/csv.vim'
 NeoBundle 'mhinz/vim-signify'
 NeoBundle 'aceofall/gtags.vim'
@@ -169,9 +167,6 @@ nmap <leader>p :CtrlP<cr>
 nmap <leader>be :CtrlPBuffer<cr>
 nmap <leader>bm :CtrlPMixed<cr>
 nmap <leader>bs :CtrlPMRU<cr>
-nmap <Tab> :NERDTree<cr>
-
-nmap <leader>t  :!start explorer.exe .<cr>
 
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 "git configure
@@ -183,11 +178,21 @@ nmap <leader>gk :Gitv<cr>
 
 set statusline=%<%f\ %h%m%r%{fugitive#statusline()}%=%-14.(%l,%c%V%)\ %P
 
+if !has("gui_running")
+    let NERDTreeDirArrows = 0
+endif
+
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 "Areline config
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-let g:airline_theme="luna" 
-let g:airline_powerline_fonts = 1   
-let g:airline#extensions#tabline#enabled = 1
-let g:airline#extensions#tabline#buffer_nr_show = 1
+if has("gui_running")
+    let g:airline_theme="luna" 
+    let g:airline_powerline_fonts = 1   
+    let g:airline#extensions#tabline#enabled = 1
+    let g:airline#extensions#tabline#buffer_nr_show = 1
+endif
 
+"if has("win32)
+"    set encoding=utf-8   
+"    set rop=type:directx,gamma:1.0,contrast:0.5,level:1,geom:1,renmode:4,taamode:1
+"endif
