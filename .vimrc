@@ -16,6 +16,7 @@ set nobackup
 set nowritebackup
 set noswapfile
 set cino=l1  "switch case indent
+set ff=unix
 
 set history=100
 set showcmd
@@ -53,7 +54,9 @@ endif
 
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 if has("gui_running")
-    set guifont=Consolas:h12:cANSI
+    "set guifont=Consolas:h12:cANSI
+    "set guifont=Courier\ New\ 12
+    set guifont=Inconsolata-g\ for\ Powerline\ Medium\ 12
 endif
 
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
@@ -83,6 +86,26 @@ if has('vim_starting')
   endif
 endif
 
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" Gtags_VerticalWindow    open windows vitically
+"let Gtags_VerticalWindow = 1 
+" Gtags_Auto_Map          use a suggested key-mapping
+" let Gtags_Auto_Map = 1
+" Gtags_Auto_Update       keep tag files up-to-date automatically
+let Gtags_Auto_Update = 1
+" Gtags_No_Auto_Jump      don't jump to the first tag at the time of search
+let Gtags_No_Auto_Jump = 1
+
+:nmap <leader>gc :cclose<CR>
+:nmap <leader>gt :Gtags<SPACE>
+:nmap <leader>gf :Gtags -f %<CR>
+:nmap <leader>gg :GtagsCursor<CR>
+:nmap <C-n> :cn<CR>
+:nmap <C-p> :cp<CR>
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+
+nmap <F4> :MRU<cr>
+
 " Required:
 if has ("win32")
     call neobundle#begin(expand('$VIM\vimfiles\bundle\'))
@@ -99,8 +122,14 @@ NeoBundle 'tpope/vim-fugitive'
 NeoBundle 'vim-scripts/Mark--Karkat'
 NeoBundle 'kien/ctrlp.vim'
 NeoBundle 'vim-scripts/DrawIt'
-NeoBundle 'Shougo/unite.vim'
-NeoBundle 'hewes/unite-gtags'
+NeoBundle 'vim-scripts/EasyGrep'
+NeoBundle 'vim-airline/vim-airline'
+NeoBundle 'vim-airline/vim-airline-themes'
+NeoBundle 'chrisbra/csv.vim'
+NeoBundle 'mhinz/vim-signify'
+NeoBundle 'aceofall/gtags.vim'
+NeoBundle 'vim-scripts/mru.vim'
+NeoBundle 'gregsexton/gitv'
 
 " My Bundles here:
 " Refer to |:NeoBundle-examples|.
@@ -143,11 +172,6 @@ nmap <leader>bs :CtrlPMRU<cr>
 nmap <Tab> :NERDTree<cr>
 
 nmap <leader>t  :!start explorer.exe .<cr>
-nnoremap <leader>gg :execute 'Unite gtags/def:'.expand('<cword>')<cr>
-nnoremap <leader>gc :execute 'Unite gtags/context'<cr>
-nnoremap <leader>gr :execute 'Unite gtags/ref'<cr>
-"nnoremap <leader>ge :execute 'Unite gtags/grep'<cr>
-"nnoremap <leader>be :execute 'Unite buffer'<cr>
 
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 "git configure
@@ -155,19 +179,15 @@ nnoremap <leader>gr :execute 'Unite gtags/ref'<cr>
 nmap <leader>gl :Git! log --all --oneline --graph<cr>
 nmap <leader>gb :Git! branch -a<cr>
 nmap <leader>gs :Gstatus<cr>
+nmap <leader>gk :Gitv<cr>
+
 set statusline=%<%f\ %h%m%r%{fugitive#statusline()}%=%-14.(%l,%c%V%)\ %P
-"nmap <leader>gk :!start gitk.cmd<cr>
 
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-"Make netrw really behave like Nerdtree
+"Areline config
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-"let g:netrw_liststyle = 3
-"let g:netrw_browse_split = 4
-"let g:netrw_altv = 1
-"let g:netrw_winsize = 25
-"let g:netrw_banner = 0
-"let g:netrw_list_hide = &wildignore
-"augroup NetRW
-"  autocmd!
-"  autocmd VimEnter * :Vexplore
-"augroup END
+let g:airline_theme="luna" 
+let g:airline_powerline_fonts = 1   
+let g:airline#extensions#tabline#enabled = 1
+let g:airline#extensions#tabline#buffer_nr_show = 1
+
