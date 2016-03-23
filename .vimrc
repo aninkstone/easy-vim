@@ -128,6 +128,8 @@ NeoBundle 'mhinz/vim-signify'
 NeoBundle 'aceofall/gtags.vim'
 NeoBundle 'vim-scripts/mru.vim'
 NeoBundle 'gregsexton/gitv'
+NeoBundle 'vim-airline/vim-airline'
+NeoBundle 'vim-airline/vim-airline-themes'
 
 " My Bundles here:
 " Refer to |:NeoBundle-examples|.
@@ -187,10 +189,14 @@ endif
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 if has("gui_running")
     let g:airline_theme="luna" 
-    let g:airline_powerline_fonts = 1   
-    let g:airline#extensions#tabline#enabled = 1
-    let g:airline#extensions#tabline#buffer_nr_show = 1
+    "let g:airline_theme="zenburn"
+    "let g:airline_theme="raven"
+else
+    let g:airline_theme="zenburn"
 endif
+let g:airline_powerline_fonts = 1   
+"let g:airline#extensions#tabline#enabled = 1
+"let g:airline#extensions#tabline#buffer_nr_show = 1
 
 "if has("win32)
 "    set encoding=utf-8   
