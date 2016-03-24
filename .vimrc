@@ -199,6 +199,7 @@ let g:airline_powerline_fonts = 1
 "let g:airline#extensions#tabline#enabled = 1
 "let g:airline#extensions#tabline#buffer_nr_show = 1
 
+<<<<<<< HEAD
 "if has("win32)
 "    set encoding=utf-8   
 "    set rop=type:directx,gamma:1.0,contrast:0.5,level:1,geom:1,renmode:4,taamode:1
