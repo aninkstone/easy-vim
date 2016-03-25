@@ -58,6 +58,8 @@ if has("gui_running")
     "set guifont=Consolas:h12:cANSI
     "set guifont=Courier\ New\ 12
     set guifont=Inconsolata-g\ for\ Powerline\ Medium\ 12
+else
+    set t_Co=256
 endif
 
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
