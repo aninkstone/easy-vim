@@ -197,5 +197,13 @@ else
 endif
 let g:airline_powerline_fonts = 1   
 
-"set encoding=utf-8   
-"set rop=type:directx,gamma:1.0,contrast:0.5,level:1,geom:1,renmode:4,taamode:1
+if has ('win32')
+    "airline symbols
+    let g:airline_left_sep = '«ó'
+    let g:airline_left_alt_sep = '«ô'
+    let g:airline_right_sep = '«õ'
+    let g:airline_right_alt_sep = '«ö'
+    let g:airline_symbols.branch = '«ã'
+    let g:airline_symbols.readonly = '«å'
+    let g:airline_symbols.linenr = '«ä'
+endif 
