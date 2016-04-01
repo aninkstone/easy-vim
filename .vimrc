@@ -198,6 +198,7 @@ endif
 let g:airline_powerline_fonts = 1   
 
 if has ('win32')
+    let g:airline_symbols = {}
     "airline symbols
     let g:airline_left_sep = '«ó'
     let g:airline_left_alt_sep = '«ô'
@@ -207,3 +208,4 @@ if has ('win32')
     let g:airline_symbols.readonly = '«å'
     let g:airline_symbols.linenr = '«ä'
 endif 
+set laststatus=2
