@@ -57,7 +57,11 @@ endif
 if has("gui_running")
     "set guifont=Consolas:h12:cANSI
     "set guifont=Courier\ New\ 12
-    set guifont=Inconsolata-g\ for\ Powerline\ Medium\ 12
+    if has('win32')
+        set guifont=Inconsolata-g_for_Powerline:h12:cANSI
+    else
+        set guifont=Inconsolata-g\ for\ Powerline\ Medium\ 12
+    endif
 else
     set t_Co=256
 endif
