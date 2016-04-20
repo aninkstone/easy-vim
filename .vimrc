@@ -52,13 +52,28 @@ if has ("win32")
     let $PATH="C:\\MinGW\\msys\\1.0\\bin;C:\\MinGW\\bin;" . $PATH
 endif
 
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+"set default encoding to utf-8 
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+if has ('win32')
+    set encoding=utf-8
+    set termencoding=utf-8
+    set fileencoding=chinese
+    set fileencodings=ucs-bom,utf-8,chinese
+    set langmenu=zh_CN.utf-8
+    source $VIMRUNTIME/delmenu.vim
+    source $VIMRUNTIME/menu.vim
+    language messages zh_cn.utf-8
+endif
+
 
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 if has("gui_running")
     "set guifont=Consolas:h12:cANSI
     "set guifont=Courier\ New\ 12
     if has('win32')
-        set guifont=Inconsolata-g_for_Powerline:h12:cANSI
+        "set guifont=Inconsolata-g_for_Powerline:h12:cANSI
+        set guifont=Droid_Sans_Mono_Dotted_for_Powe:h12:cANSI
     else
         set guifont=Inconsolata-g\ for\ Powerline\ Medium\ 12
     endif
@@ -183,6 +198,7 @@ nmap <leader>gl :Git! log --all --oneline --graph<cr>
 nmap <leader>gb :Git! branch -a<cr>
 nmap <leader>gs :Gstatus<cr>
 nmap <leader>gk :Gitv<cr>
+nmap <tab> :NERDTree<cr>
 
 set statusline=%<%f\ %h%m%r%{fugitive#statusline()}%=%-14.(%l,%c%V%)\ %P
 
@@ -206,7 +222,8 @@ if has ('win32')
     "airline symbols
     let g:airline_left_sep = '«ó'
     let g:airline_left_alt_sep = '«ô'
-    let g:airline_right_sep = '«õ'
+    "let g:airline_right_sep = '«õ'
+    let g:airline_right_sep = ''
     let g:airline_right_alt_sep = '«ö'
     let g:airline_symbols.branch = '«ã'
     let g:airline_symbols.readonly = '«å'
