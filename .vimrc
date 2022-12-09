@@ -186,9 +186,9 @@ let g:ctrlp_working_path_mode = 'r'
 nmap <leader>p :CtrlP<cr>
 
 " Easy bindings for its various modes
-nmap <leader>be :CtrlPBuffer<cr>
+"nmap <leader>be :CtrlPBuffer<cr>
 nmap <leader>bm :CtrlPMixed<cr>
-nmap <leader>bs :CtrlPMRU<cr>
+"nmap <leader>bs :CtrlPMRU<cr>
 nmap <leader>bb :CtrlPBookmarkDir<cr>
 
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
@@ -200,7 +200,7 @@ nmap <leader>gs :Gstatus<cr>
 nmap <leader>gk :Gitv<cr>
 nmap <tab> :NERDTree<cr>
 
-set statusline=%<%f\ %h%m%r%{fugitive#statusline()}%=%-14.(%l,%c%V%)\ %P
+"set statusline=%<%f\ %h%m%r%{fugitive#statusline()}%=%-14.(%l,%c%V%)\ %P
 
 if !has("gui_running")
     let NERDTreeDirArrows = 0
@@ -229,4 +229,4 @@ if has ('win32')
     let g:airline_symbols.readonly = '«å'
     let g:airline_symbols.linenr = '«ä'
 endif 
-set laststatus=2
+"set laststatus=2
