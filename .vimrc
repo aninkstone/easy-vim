@@ -40,6 +40,11 @@ set expandtab
 set tabstop=4
 set softtabstop=4
 set go=m
+set noerrorbells
+set novisualbell
+set visualbell t_vb=
+" 针对某些终端，显式清空视觉铃声音效序列
+autocmd GUIEnter * set visualbell t_vb=
 
 if has ("gui_running")
     colorscheme desert
